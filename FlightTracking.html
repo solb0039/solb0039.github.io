@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<!--
+	Binary by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Flight Stats API</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="logo"><strong>Flight Stats API</strong></a>
+				<nav>
+					<a href="#menu">Menu</a>
+				</nav>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="IntroToFlightStats.html">Intro to FlightStats</a></li>
+					<li><a href="GettingAPIKey.html">Getting API Key</a></li>
+					<li><a href="JSONData.html">Working with JSON</a></li>
+					<li><a href="FlightTracking.html">Flight Tracking</a></li>
+					<li><a href="AirportInfo.html">Airport Departures</a></li>
+					<li><a href="CompleteFlightBoard.html">Complete Flight Info</a></li>
+				</ul>
+			</nav>
+
+		<!-- Main -->
+			<section id="main">
+				<div class="inner">
+					<div class="image fit">
+						<img src="images/boeing_787.jpg" alt="" />
+					</div>
+					<header>
+						<h1>Flight Tracking </h1>
+						<p class="info">Tracking a single flight.</p>
+					</header>
+					<p>Retrieving information about a single flight will tell you the basic information such as the scheduled departure and arrival times. While it isn't very practical to get information about a single flight since a simple Google search will give you that information, going through the process of using FlightStats' API with a single flight is a good introduction and foundation for subsequent requests. </p>
+					<h3>Tracking a single flight</h3>
+					<p>To demonstrate the actual API call, we first need to pick a flight.  Fort this example, we will use choose a flight from Portland International Airport (PDX) to San Francisco International (SFO) such as United Airlines Flight 1038.</p>
+					<p>FlightStats API calls are built up from a base URL. To track a single flight with the FlightStats API, the "<a href="https://developer.flightstats.com/api-docs/scheduledFlights/v1">Flight Status & Track by Flight</a>" API is used. </p>
+					<p>To track United flight 1038, the API call would be:<pre>https://api.flightstats.com/flex/schedules/rest/v1/json/flight/UAL/1038/departing/2017/5/17</pre></p>
+					<p>Now, lets break down this call into the components:</p>
+					<ul>
+						<li><b>Base URL:</b> <code>https://api.flightstats.com/flex/</code> This is the starting point for all FlightStats API calls.</li>
+						<li><b>API call:</b>  For the simple flight tracking <code>schedules/</code> is added to the query.</li>
+						<li><b>Protocol:</b> The <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> protocol is used for FlightStats. This will not change and all API calls will have <code>rest/</code> added to the query.</li>
+						<li><b>Version:</b> <code>v1/</code> is the standard version.</li>
+						<li><b>Format Selector:</b>  Either JSON, JSONP, or XML formats are offered. For this guide, the <code>JSON/</code> will be used.</li>
+						<li><b>Required Parameters:</b> This is the heart of the unique API calls. For the flight tracking API, the construction of <code>flight/UAL/1038/departing/2017/5/17</code> represents United Airlines flight 1038 departing on May 17th, 2017. Changing any one of these elements will adjust the query. For example, substitution of "AA" for "UAL" and "6966" for "1038" will change the request to instead search American Airlines flight 6966, which also happens to be from Portland to San Francisco.</li>
+						<li><b>Optional Parameters: </b>There are a series of optional extended options that may be added to the query for customization. For example, adding <code>extendedOptions=languageCode:es/</code> would have modified the response data to Spanish.</li>
+					</ul>
+					</p>There is one additional component that was not shown above and must be added to all API calls, authentication. This is where you provide to FlightStats your unique API Key and Id <a href="GettingAPIKey.html">described earlier.</a></p> 
+					<p>The full actual request for UAL flight 1038 on May 17th, 2017 would appear as: <pre>https://api.flightstats.com/flex/schedules/rest/v1/json/flight/UAL/1038/departing/2017/5/17?appId=MY_ID&appKey=MY_KEY</pre></p>
+					<h3>JSON Response</h3>
+					<p>Ignoring for a moment how the actually get the server response, let's just ahead and just look at the data before diving in on how to put it all together in the next section.</p>
+					<p>The JSON object received from FlightStats is in the form described in the previous section, separated into the 'Request', 'Scheduled Flight', and 'Appendix' sections.  The important information we are interested in is in the 'Scheduled Flights' section:
+					<pre><code>"scheduledFlights": [
+  {
+   "carrierFsCode": "UA",
+   "flightNumber": "1038",
+   "departureAirportFsCode": "PDX",
+   "arrivalAirportFsCode": "SFO",
+   "stops": 0,
+   "arrivalTerminal": "3",
+   "departureTime": "2017-05-17T05:40:00.000",
+   "arrivalTime": "2017-05-17T07:30:00.000",
+   "flightEquipmentIataCode": "739",
+   "isCodeshare": false,
+   "isWetlease": false,
+   "serviceType": "J",
+   "serviceClasses": [
+    "F",
+    "J",
+    "Y"
+   ],
+   "trafficRestrictions": [],
+   "codeshares": [
+    {
+     "carrierFsCode": "NH",
+     "flightNumber": "7325",
+     "serviceType": "J",
+     "serviceClasses": [
+      "F",
+      "Y"
+     ],
+     "trafficRestrictions": [
+      "D"
+     ],
+     "referenceCode": 11305270
+    }</code></pre>The information we care about such as departure time is contained in the object, as well as a lot of extra information that we may not be interested in. Now that we have seen a basic call and the response, we will put this all together into a working example in the next section.
+					</p>
+				</div>
+				<center>
+						<ul class="actions">
+							<li><a href="AirportInfo.html" class="button">Airport Flight Departures</a></li>
+						</ul>
+				</center>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+
+				<div class="copyright">
+					&copy; Sean Solberg Design by <a href="https://templated.co">TEMPLATED</a>.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

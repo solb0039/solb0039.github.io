@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<!--
+	Binary by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Flight Stats API</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="logo"><strong>Flight Stats API</strong></a>
+				<nav>
+					<a href="#menu">Menu</a>
+				</nav>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="IntroToFlightStats.html">Intro to FlightStats</a></li>
+					<li><a href="GettingAPIKey.html">Getting API Key</a></li>
+					<li><a href="JSONData.html">Working with JSON</a></li>
+					<li><a href="FlightTracking.html">Flight Tracking</a></li>
+					<li><a href="AirportInfo.html">Airport Departures</a></li>
+					<li><a href="CompleteFlightBoard.html">Complete Flight Info</a></li>
+				</ul>
+			</nav>
+
+		<!-- Main -->
+			<section id="main">
+				<div class="inner">
+					<div class="image fit">
+						<img src="images/Flight_Board.jpg" alt="" />
+					</div>
+					<header>
+						<h1>Complete Table of Flights</h1>
+						<p class="info">Creating a table with flights and their current status</a></p>
+					</header>
+					<p>The last step on the way to creating more realistic flight panels that you would expect to see in an airport, we need to add information like the updated flight status as well as gate and terminal information. </p>
+					<p>To accomplish this, we can use the FlightStats <i>flightstatus</i> API.  The documentation is found <a href="https://developer.flightstats.com/api-docs/flightstatus/v2/airport">here</a>.</p>
+					<p>The format of the API call is <br/><code>api.flightstats.com/flex/flightstatus/rest/v2/json/airport/status/{airport}/dep/{year}/{month}/{day}/{hourOfDay}/?appId={}&appKey={}&numHours={}</code>
+						<br>There is a lot of information in this call, but it all is just an extension of the previous section. Let's break down the sections:
+						<ul>
+							<li><code>{airport}</code>: The 3 letter airport code.</li>
+							<li><code>dep</code>: Departures.</li>
+							<li><code>{year}/{month}/{day}/{hourOfDay}</code>: The selected date and time of day.</li>
+							<li><code>numHours={}</code>: The number of hours of data to display, up to maximum of 6 hours.</li>
+						</ul>
+					</p>
+					
+					<p>The updated JavaScript code for the simple web interface contains a lot of changes. 
+					
+					<iframe width="100%" height="300" src="//jsfiddle.net/solb870039/d6urrzvj/embedded/js,html,result/dark/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+					Starting with the HTML section, a dropdown selector for the number of hours of flight departures was added.  The table to display the results was rearranged.  First, the "From" column was removed and replaced with a header since the departure airport information is probably obvious if this screen was to appear at an airport.  Several additional columns were added such as "Terminal", "Gate", and "Actual Time". 
+					<br>
+					The JSON response for the <code>flightstatus</code> API is not always consistent. There are several elements that are occasionally not present. This can be a challenge in writing the code to parse the response. One way to get around this is to use the method <code>obj.hasOwnProperty</code> method to check whether or not a key is present in a JSON object. This inconsistent data structure first becomes an issue when trying to populate the "Terminal" field of the flight table. Most of the flight objects in the JSON response have this data, but some flights or airports do not. Therefore, using the hasOwnProperty method is necessary. The relavent code excerpt is shown here: 
+					<br><pre><code>if (response.flightStatuses[i].hasOwnProperty("airportResources") && response.flightStatuses[i].airportResources.hasOwnProperty("departureTerminal")){
+	createRow(response.flightStatuses[i].airportResources.departureTerminal);
+}
+else createRow('');</code></pre>There are actually two checks in the <i>if</i> statement as we must first check if the parent <i>airportResources</i> key is present in the object as well as the secondary <i>departureTerminal</i> key. If the key is not present, then a blank cell is created.
+					<br>
+					The other place where additional code is required to properly display the flight data is in the display of the updated flight status information. This field captures the most recent estimated flight departure time. As before, the object key may not be present in the JSON response object so a similar check as above is required.  Additionally, if the field is present, the actual flight departure time is often the same as the scheduled time. The table would be very redundant and messy with so much information so an additional nested <if>if</if> statement was added to check if the actual time equals the scheduled time and only display the information for the flights that are delayed.
+					<br>
+<pre><code>if (response.flightStatuses[i].operationalTimes.hasOwnProperty("estimatedGateDeparture"))
+{
+	var tempTime = response.flightStatuses[i].operationalTimes.estimatedGateDeparture.dateLocal;
+	if (tempTime != response.flightStatuses[i].departureDate.dateLocal)
+	{
+		createRow(response.flightStatuses[i].operationalTimes.estimatedGateDeparture.dateLocal.substring(11,16));
+	}
+	else createRow('');
+}
+else createRow('');</code></pre> 
+					</p>
+					
+					<p>The final departures flight board now looks like this:</p>
+					<p>
+							<img src="images/FinalFlightBoard.png" alt=""/> 
+					</p>
+				</div>
+				<center>
+						<ul class="actions">
+							<li><a href="Index.html" class="button">Home</a></li>
+						</ul>
+				</center>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="copyright">
+					&copy; Sean Solberg. Design: <a href="https://templated.co">TEMPLATED</a>.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

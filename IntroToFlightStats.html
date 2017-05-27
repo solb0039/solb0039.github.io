@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<!--
+	Binary by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Flight Stats API</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="logo"><strong>Flight Stats API</strong></a>
+				<nav>
+					<a href="#menu">Menu</a>
+				</nav>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="IntroToFlightStats.html">Intro to FlightStats</a></li>
+					<li><a href="GettingAPIKey.html">Getting API Key</a></li>
+					<li><a href="JSONData.html">Working with JSON</a></li>
+					<li><a href="FlightTracking.html">Flight Tracking</a></li>
+					<li><a href="AirportInfo.html">Airport Departures</a></li>
+					<li><a href="CompleteFlightBoard.html">Complete Flight Info</a></li>
+				</ul>
+			</nav>
+
+		<!-- Main -->
+			<section id="main">
+				<div class="inner">
+					<div class="image fit">
+						<img src="images/FlightStatsLogo.png" alt="" />
+					</div>
+					<header>
+						<h1>Introduction to FlightStats</h1>
+						<p class="info">Information about the company and service.</p>
+					</header>
+					<p>FlightStats is a Portland, OR based company that provides real-time global flight data services for the commercial aviation industry. Their information is used to power airline data services, travel agencies and populate reporting and analytics reports.</p>
+					<h2>What is an API?</h2>
+					<p>An API is short for <b>A</b>pplication <b>P</b>rogramming <b>I</b>nterface.  It is a set of instructions and procedures to communicate with external software. In web programming, a web API specifies how your web browser communicates with the server side information, in this case, the data from FlightStats.  APIs are the building blocks that allow programmers to make websites interactive and interesting.  </p>
+					<p><h4>Some well known APIs are</h4>
+						<ul>
+							<li><i>Google Maps</i>:  This API allows developers embed Google maps into websites and use related mapping features.</li>
+							<li><i>YouTube</i>:  Allows developers to place YouTube videos directly into websites without having to move to YouTube's website.</li>
+							<li><i>eBay</i>:  The eBay API allows custom websites to interact directly with eBay for services such as product search, buying, and selling.</li>
+						</ul>
+					<h2>What can the FlightStats API do?</h2>
+					<p>FlightStats' APIs power the entire travel workflow from future flight scheduling, real-time updates, and retroactive analysis and reporting. It is the information behind the well known website Kayak.com. Data requests contain hundreds of pieces of information ranging from high-level flight date and time information down to the details of aircraft type or gate and baggage information. FlightStats' API information is located <a href="https://developer.flightstats.com">here</a>.</p>
+					<p>The main APIs provided by FlightStats and short description of each are:</p>
+					<ul>
+						<li><i>Airlines</i><br /> The Airlines API provides basic reference information about one or more airlines.</li>
+						<li><i>Airports</i><br />The Airports API provides basic reference information about one or more airports.</li>
+						<li><i>Alerts</i><br />The Alerts API offers access to push-based alerting of flight status information. Alert Messages are produced when an existing alert rule is triggered, and are delivered to the destination specified by the rule.</li>
+						<li><i>Connections</i><br />Connections returns connecting flights between two airports. It is very useful when flying in or out of smaller, regional airports such as Newark, NJ; Fort Lauderdale, FL; or Spokane, WA.</li>
+						<li><i>Delay Index</i><br />The Delay Index API offers access to current departure performance at airports.</li>
+						<li><i>Equipment</i><br />The Equipment API provides basic reference data about aircraft equipment.</li>
+						<li><i>Flight Status & Track</i><br />Flight Status gives you access to current flight information, including scheduled, estimated and actual departure/arrival times, equipment type, delay calculations, terminal, gate and baggage carousel. </li>
+						<li><i>Flight Information Displays</i><br />The FIDS API provides flight information suitable for use in Flight Information Display Systems.</li>
+						<li><i>Historical FLight Status</i><br />Historical Flight Status provides flight information for flights completed more than 48 hours ago. Information includes scheduled, estimated and actual departure/arrival times, equipment type, delay calculations, terminal, gate and baggage carousel.</li>
+						<li><i>Historical Flight Tracks</i><br />Historical Flight Tracks provides flight position information for flights completed more than 48 hours ago. Information includes position (lat/long), altitude, bearing, speed and route. Flight plan can be included if available.</li>
+						<li><i>Ratings</i><br />The Ratings API provides on-time and delay-based ratings.</li>
+						<li><i>Schedules</i><br />The Schedules API provides access to the schedule information for upcoming flights. It is designed to work in conjunction with the FlightStatus APIs to provide continuity between scheduled flights in the future and real-time flight data in the present. It allows convenient search methods by flight, route and airport.</li>
+						<li><i>Weather</i><br />The Weather API provides information about current and future weather conditions affecting airports and flights. Weather information coverage is good for locations within the United States and is limited for other countries.</li>					
+					</ul>
+					<p>Subsequent sections of this 'How to Guide' will work through examples of the and Flight Status and Airports APIs</p>
+				</div>
+				<center>
+				<ul class="actions">
+					<li><a href="GettingAPIKey.html" class="button">Getting the API Key</a></li>
+				</ul>
+				</center>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+
+				<div class="copyright">
+					&copy; Sean Solberg Design by <a href="https://templated.co">TEMPLATED</a>.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

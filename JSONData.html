@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<!--
+	Binary by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Flight Stats API</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="logo"><strong>Flight Stats API</strong></a>
+				<nav>
+					<a href="#menu">Menu</a>
+				</nav>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="IntroToFlightStats.html">Intro to FlightStats</a></li>
+					<li><a href="GettingAPIKey.html">Getting API Key</a></li>
+					<li><a href="JSONData.html">Working with JSON</a></li>
+					<li><a href="FlightTracking.html">Flight Departures</a></li>
+					<li><a href="AirportInfo.html">Airport Info</a></li>
+				</ul>
+			</nav>
+
+		<!-- Main -->
+			<section id="main">
+				<div class="inner">
+					<div class="image fit">
+						<img src="images/pic02.jpg" alt="" />
+					</div>
+					<header>
+						<h1>Working with JSON</h1>
+						<p class="info">Understand JavaScript Object Notation</p>
+					</header>
+					<p>Now that you have made it this far, you know what an API is and you have your API key and you are ready to receive flight data. The following sections will cover details of the API calls to FlightStats, but before beginning, let's have a quick look at how the data will be received. </p>
+					<h2>JSON: JavaScript Object Notation</h2>
+					<p>JSON is a standardized method for sending and receiving information. JSON is just one of several data structures that has slowly become an industry standard for API calls. To understand the JSON format, consider a simple example of an object that has three properties: a name, an age, and a hobby.  The standard 'key'-'value' data storage paradigm is used here. The simple JSON object representing this object is shown in the code excerpt below:</p>
+					<h2></h2>
+					<pre><code>{
+"Name": "John",
+"Age": 32,
+"Occupation": "Engineer"
+"Hobby": "Basketball"
+}</code></pre>
+					<p>The important point is the series of braces to define the properties of the object. Now, we can expand on any object so that it contains a collection (or array) of objects.  Logically, only the "hobbies" property can have multiple values so it is expanded to hold multiple values by using the array notation:</p>
+					<pre><code>{
+"Name": "John",
+"Age": 32,
+"Occupation": "Engineer"
+"Hobbies": ["Basketball", "Cooking", "Sports Cars"]
+}</code></pre>
+					<p>In the example above, a single property within the object was expanded.  Taking this process one step further, the entire object can be replicated into multiples instances.  In this case, the 'instance' is a person, so the object is named "People" and a second instance of the object is created.  This is shown below:</p>
+					<pre><code>{
+"People":[
+	{
+	"Name": "John",
+	"Age": 32,
+	"Occupation": "Engineer",
+	"Hobbies": [
+		{"Name" : "Basketball", "Type": "Sport"},
+		{"Name" : "Cooking", "Type": "Lifestyle"},
+		{"Name" : "Cars", "Type": "Automotive"}]
+	},
+	{
+	"Name": "Michael",
+	"Age": 29,
+	"Occupation": "Banker",
+	"Hobbies": [
+		{"Name" : "Photography", "Type": "Arts"},
+		{"Name" : "Surfing", "Type": "Outdoors"},
+		{"Name" : "Travel", "Type": "Lifestyle"}]
+	}
+	]
+}</code></pre>
+					<p>At this point is should become clear that any data structure can be represented in JSON by expanding on this pattern. <br />Two methods that are important to know when using JSON data are the <i>stringify</i> and <i>parse</i> methods.  The stringify method converts a JSON object into a text string, which is the common communication data structure with a web server.  The opposite of this action is the parse method, which converts a string of text into a JavaScript object. Typically an object is converted to a string before sending data and JSON data received in an API call is parsed into a JSON object by the web browser. </p>
+					<pre>
+<code>var response = JSON.parse(req.responseText);
+var payload = JSON.stringify(jsonObject);</code></pre>
+					<h3>FlightStats JSON Objects</h3>
+					<p>FlightStats JSON data objects always contain three principle keys.  These are: 
+					<ul>
+						<li>Request: An object that contains a summary of the request sent to FlightStats</li>
+						<li>{Flight Data}: This is the principle object that contains the relavent flight information. This object name will change depending on the API call.</li>
+						<li>Appendix: The appendix object typically contains information that expand the meaning of the Flight Data object. Some examples of appendix keys are:</li>
+						<ul>
+							<li>Airlines: Information to map the airline three letter code to the full name, e.g. "ORD" is "Chicago".</li>
+							<li>Airports: Information to map the three letter airport code to the city name, e.g. "UAL" is "United Airlines".</li>
+							<li>Equipment: Information about the aircraft types.</li>
+						</ul>
+					</ul>
+					</p>
+					<p>The final important point about JSON data is accessing array elements. The JSON objects received by FlightStats will usually contain many instances of flight data in an array. Accessing each element requires using the array notation. For example, the following JSON object was received from FlightStats:
+					</p>
+						<img src="images/JSON_Array_Example.png" ></br>
+					<p>Under the <i>flightStatuses</i> array, there are numerous instances of flights. In order to access the key <i>carrierFsCode</i> for the 4th flight, the following notation is used:
+						</br><code>var carrierCode = response.flightStatuses[4].carrierFsCode</code>
+					</p>
+					<p>Having covered all the basic information about using the flightStats API, we can now move on to the first example of tracking a single airline flight.
+					</p>
+				</div>
+				<center>
+					<ul class="actions">
+						<li><a href="FlightTracking.html" class="button">Tracking a flight</a></li>
+					</ul>
+				</center>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+
+				<div class="copyright">
+					&copy; Sean Solberg Design by <a href="https://templated.co">TEMPLATED</a>. Image: <a href="https://unsplash.com">Unsplash</a>.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
